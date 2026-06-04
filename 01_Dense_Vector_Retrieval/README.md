@@ -68,7 +68,7 @@ You will compare embeddings for terms like:
 Why is cosine similarity useful for dense vector retrieval?
 
 ##### ✅ Answer:
-
+it is scale-invariant, perfectly suited for high-dimensional semantic embeddings, and eliminates bias caused by varying text or document lengths
 ---
 
 ## 🏗️ Activity #2: Build the Vector RAG Pipeline
@@ -87,18 +87,20 @@ Run the notebook sections that:
 Why is metadata important for a RAG application?
 
 ##### ✅ Answer:
-
+It enables precise filtering, boosts retrieval accuracy, and allows the system to cite sources reliably.
 #### ❓Question #3
 
 What tradeoff do we make when choosing chunk size and chunk overlap?
 
 ##### ✅ Answer:
+processing load(speed and memory) vs accuaracy
 
 #### ❓Question #4
 
 What does a similarity score help you understand, and what does it not prove by itself?
 
 ##### ✅ Answer:
+A similarity score help me to understand relevance and semantic closeness of the answers, however it doesn't prove what is true or factual.
 
 ---
 
@@ -115,6 +117,8 @@ For the vibe check queries, did the retrieved context seem relevant before gener
 
 ##### ✅ Answer:
 
+Yes. The are retrieved by similarity scores so there should be something related between questions and sources. This is due to the way how the embedding and similarity calculation work.
+
 ---
 
 ## 🏗️ Activity #4: Tune Retrieval
@@ -129,15 +133,17 @@ Improve retrieval quality by changing one or more of:
 Document what changed and whether retrieval improved.
 
 ##### Settings Changed:
-
--
+1. ChunkSize 100, Overlap:20, `k`:4
+2. ChunkSize 100, Overlap:20, `k`:10
+3. ChunkSize 2000, Overlap:200, `k`:4
+4. Q3 changed to 'What shall I do about feeding a health adult cat?`
 
 ##### Results:
 
-1.
-2.
-3.
-
+1. takes longer to process splits and answer quality gets bad
+2. answer quality is improved.
+3. qdrant processing time is shorter. Answer quality is good.
+4. answer is different than ask 'What shall I know about ...' (become less detailed)
 ---
 
 ## Optional Deep Dive: RAG From Scratch
