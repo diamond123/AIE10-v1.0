@@ -69,6 +69,7 @@ Why is cosine similarity useful for dense vector retrieval?
 
 ##### ✅ Answer:
 it is scale-invariant, perfectly suited for high-dimensional semantic embeddings, and eliminates bias caused by varying text or document lengths
+
 ---
 
 ## 🏗️ Activity #2: Build the Vector RAG Pipeline
