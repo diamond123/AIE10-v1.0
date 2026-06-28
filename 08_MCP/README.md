@@ -97,6 +97,10 @@ ISSUER_URL=https://xxxx-xx-xx-xx-xx.ngrok-free.app uv run server.py
 ### Breakout Room #2
 
 - Connect an MCP client to the server
+
+  ```bash
+  uv run client.py --server-url=https://xxxx-xx-xx-xx-xx.ngrok-free.app uv --interactive
+  ```
 - Build an end-to-end interaction flow using the MCP tools
 
 ## Ship
@@ -155,7 +159,9 @@ Why is OAuth important for MCP servers, and what security considerations should 
 
 #### Answer
 
-_(insert your answer here)_
+OAuth is crucial for MCP servers because it secures agentic workflows by standardized, permission-based access. It allows AI clients to securely access sensitive enterprise or personal data on behalf of a user without exposing raw credentials
+
+When exposing tools to AI clients, the most critical security consideration is preventing prompt injection attacks from executing unintended or malicious actions. Because AI models dynamically decide when and how to call tools based on untrusted inputs (like user prompts or data pulled from the web), tools must be secured with the assumption that the client will eventually be manipulated. Securing AI tool execution requires a multi-layered defense strategy focused on limiting access, validating inputs, and containing execution environments.
 
 ### Question #2
 
@@ -163,7 +169,9 @@ What is Streamable HTTP transport in MCP, and why might you expose a server publ
 
 #### Answer
 
-_(insert your answer here)_
+Streamable HTTP transport is a protocol used by the Model Context Protocol (MCP) for remote client-server communication. It uses standard HTTP POST and GET requests on a single endpoint, eliminating the need for persistent, stateful connections like WebSockets or SSE.
+
+While a local stdio transport is ideal for a single developer running tools on their own laptop, it falls short when you need to share resources or access cloud-native data. Exposing a MCP server publicly with OAuth enables multi-user access, secure remote integrations with hosted AI agents, and enforce centralized security policies.
 
 ## Activity 1: Extend the MCP Server
 

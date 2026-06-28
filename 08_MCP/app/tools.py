@@ -117,6 +117,52 @@ async def remove_from_cart(product_id: int) -> dict:
         return {"error": "Item not in cart"}
     return {"success": True, "message": "Item removed from cart"}
 
+@mcp.tool()
+async def search_products(query: str) -> list[dict]:
+    """Search for products by name or description."""
+    try:
+        await _get_username()
+    except Exception as e:
+        return {"error": str(e)}
+
+    db = await oauth_provider._get_db()
+    cursor = await db.execute(
+        """SELECT id, name, description, price, category
+           FROM products
+           WHERE name LIKE ? OR description LIKE ?""",
+        (f"%{query}%", f"%{query}%"),
+    )
+    rows = await cursor.fetchall()
+    return [
+        {"id": r[0], "name": r[1], "description": r[2], "price": r[3], "category": r[4]}
+        for r in rows
+    ]
+
+@mcp.tool()
+async def update_cart_quantity(product_id: int, quantity: int) -> dict:
+    """Update the quantity of a product in your shopping cart.
+    The product must be in you cart and quantity must be a positive integer. 
+    If quantity is set to 0, the item is removed from the cart.
+    """
+    print(f"Updating cart: product_id={product_id}, quantity={quantity}")
+
+    if quantity < 0:
+        return {"error": "Quantity must be a positive integer"}
+    if quantity == 0:
+        return await remove_from_cart(product_id)
+
+    username = await _get_username()
+    db = await oauth_provider._get_db()
+
+    cursor = await db.execute(
+        "UPDATE cart_items SET quantity = ? WHERE username = ? AND product_id = ?",
+        (quantity, username, product_id),
+    )
+    await db.commit()
+    if cursor.rowcount == 0:
+        return {"error": "Item not in cart"}
+    return {"success": True, "message": f"Updated {product_id} quantity to {quantity}"}
+
 
 @mcp.tool()
 async def checkout() -> dict:
