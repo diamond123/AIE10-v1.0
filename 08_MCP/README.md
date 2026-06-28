@@ -177,6 +177,12 @@ While a local stdio transport is ideal for a single developer running tools on t
 
 Add at least one new tool to the cat shop MCP server (e.g., `search_products`, `update_cart_quantity`, or `get_order_history`). Ensure the new tool integrates properly with the existing database and OAuth authentication. Demo the new tool through an MCP client and include it in your Loom video.
 
+### Activity 1 notes:
+
+  added the following tools to <code>app/tools.py</code>
+  - search_products
+  - update_cart_quantity
+
 ## Advanced Activity: Build a Custom MCP Client
 
 Build a custom MCP client that connects to the cat shop server over Streamable HTTP, authenticates via OAuth, and orchestrates a multi-step shopping flow (browse → add to cart → checkout). Compare the developer experience of MCP-based tool integration vs. traditional REST API calls.
